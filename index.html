@@ -100,6 +100,7 @@
         
         .download-btn {
             background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+           
         }
         
         .inscription-btn {
@@ -589,22 +590,46 @@
     font-size: 1.2rem;
 }
 
+@media (max-width: 768px) {
+    .btn-group {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        gap: 5px;
+        background-color: rgba(255, 255, 255, 0); /* ou autre couleur de fond */
+        padding: 5px 0;
+        z-index: 1000; /* pour qu’il soit au-dessus */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* optionnel */
+    }
+
+    .btn {
+        padding: 5px 10px;
+        font-size: 0.8em;
+    }
+
+    .content, .header {
+        padding-top: 60px; /* pour ne pas cacher le contenu sous les boutons */
+    }
+}
 
 
 /* Media Queries pour différentes tailles */
 @media (min-width: 768px) {
     .btn-group {
-        gap: 20px;
-        top: 20px;
+        gap: 10px;
+        top: 10px;
     }
     
     .btn {
-        padding: 15px 30px;
+        padding: 10px 00px;
         font-size: 1.1em;
     }
     
     .header {
-        padding: 30px;
+        padding: 10px;
     }
     
     .content {
@@ -664,7 +689,7 @@
         
     <div class="btn-group">
         <button class="btn download-btn" id="downloadBtn">
-            <i class="fas fa-download"></i> Télécharger en PDF
+            <i class="fas fa-download"></i>  PDF
         </button>
         
         <a href="#inscription-form" class="btn inscription-btn" onclick="scrollToForm()">
@@ -962,7 +987,7 @@
             "Profession Actuelle": "المهنة الحالية",
             "Motivation (Optionnel)": "التحفيز (اختياري)",
             "Envoyer la demande d'inscription": "إرسال طلب التسجيل",
-            "Télécharger en PDF": "تحميل PDF",
+            " PDF": "PDF",
             "S'inscrire à la formation": "التسجيل في التكوين",
             "Merci pour votre inscription !": "شكرًا لتسجيلك!",
             "Nous avons bien reçu votre demande d'inscription et vous contacterons très prochainement.": 

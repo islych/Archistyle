@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archistyle by Mourid - Formation Architecture Responsable</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Bibliothèques pour générer le PDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        :root {
+            --teal-dark: #0c343d;
+            --teal-medium: #1a535c;
+            --teal-light: #4ecdc4;
+            --gold-dark: #d4af37;
+            --gold-light: #f8de7e;
+            --cream: #f7f9f9;
+            --text-dark: #1e3c72;
+            --blue: #3a7bd5;
+        }
+        .header,
+        .logo-container,
+        .header-text,
+        .content,
+        .contact-section {
+            z-index: 1;
+            position: relative; /* obligatoire avec z-index */
+        }
+        .btn::before {
+            z-index: -1;
+        }
+        .fiche-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .fiche-container * {
+            position: relative;
+            z-index: 2;
+        }
+
+        body {
+           font-family: 'Raleway', sans-serif;
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-medium) 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(10, 46, 56, 0.3) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(74, 205, 196, 0.2) 0%, transparent 20%);
+        }
+        
+.btn-group {
+    display: flex;
+    gap: 15px;
+    margin: 0 auto 30px;
+    padding: 10px;
+    position: sticky;
+    top: 10px;
+    z-index: 100;
+    flex-wrap: wrap;
+    justify-content: center;
+    width: 100%;
+    max-width: 250mm;
+}
+        
+.btn {
+    color: var(--teal-dark);
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    text-decoration: none;
+    display: inline-block;
+    text-align: center;
+    min-width: 180px;
+}
+        
+        .download-btn {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+        }
+        
+        .inscription-btn {
+            background: linear-gradient(135deg, var(--teal-light) 0%, var(--teal-medium) 100%);
+            color: white;
+        }
+        
+        .translation-btn {
+            background: linear-gradient(135deg, var(--blue) 0%, #00d2ff 100%);
+            color: white;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+.fiche-container {
+    background: var(--cream);
+    width: 100%;
+    max-width: 250mm;
+    min-height: 297mm;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+    z-index: 2;
+    margin: 0 auto;
+}
+        
+        .header {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-medium) 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 80% 30%, rgba(216, 175, 39, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 20% 70%, rgba(74, 205, 196, 0.1) 0%, transparent 20%);
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .logo-container {
+            background: rgba(255, 255, 255, 0.9);
+
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+            max-width: 500px;
+
+            position: relative;
+            z-index: 2;
+            border: 2px solid var(--gold-light);
+                padding: 10px;
+    width: 90%;
+    max-width: 400px;
+        }
+        
+        .logo-svg {
+            width: 100%;
+            height: auto;
+            max-height: 150px;
+        }
+        
+        .header-text {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+        
+        .logo {
+            font-size: 2.8em;
+            font-weight: 800;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            font-family: 'Playfair Display', serif;
+            color: var(--gold-light);
+            letter-spacing: 1px;
+        }
+        
+        .subtitle {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.9;
+            color: white;
+            margin-top: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.1em;
+            font-weight: 500;
+            color: var(--gold-light);
+            margin-top: 15px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .content {
+            padding: 30px 20px;
+            position: relative;
+        }
+        
+        .section {
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 700;
+            color: var(--teal-medium);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--teal-light);
+            position: relative;
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gold-dark);
+        }
+        
+        .section-content {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: var(--teal-dark);
+            text-align: justify;
+        }
+        
+        .highlight-box {
+            background: linear-gradient(to right, rgba(26, 83, 92, 0.05) 0%, rgba(248, 222, 126, 0.05) 100%);
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 5px solid var(--gold-dark);
+            margin: 20px 0;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%231a535c' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+        
+        .highlight-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .highlight-list li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+        
+        .highlight-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 7px;
+            width: 16px;
+            height: 16px;
+            background: var(--gold-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--teal-dark);
+            font-weight: bold;
+        }
+        
+        .highlight-list li strong {
+            color: var(--teal-medium);
+        }
+        
+        .price-highlight {
+            background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold-dark) 100%);
+            color: var(--teal-dark);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 25px 0;
+            box-shadow: 0 8px 25px rgba(216, 175, 39, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .price-highlight .new-price {
+            font-size: 2em;
+            font-weight: 800;
+            color: var(--teal-dark);
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.5);
+        }
+        
+        .contact-section {
+            background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal-medium) 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .contact-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.1;
+        }
+        
+        .contact-title {
+            font-size: 1.4em;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            color: var(--gold-light);
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .contact-item {
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 12px;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .contact-item div:first-child {
+            font-weight: 700;
+            margin-bottom: 10px;
+            font-size: 1em;
+            color: var(--gold-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .contact-item div:first-child i {
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+        
+        .decorative-elements {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .decorative-element {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, rgba(248, 222, 126, 0.15) 0%, transparent 70%);
+            border-radius: 50%;
+            top: 20px;
+            right: 20px;
+            animation: pulse 5s ease-in-out infinite;
+        }
+        
+        .decorative-element:nth-child(2) {
+            width: 60px;
+            height: 60px;
+            top: auto;
+            bottom: 40px;
+            left: 30px;
+            background: radial-gradient(circle, rgba(74, 205, 196, 0.2) 0%, transparent 70%);
+            animation-delay: 1s;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 0.1; }
+        }
+        
+        .footer {
+            text-align: center;
+            padding: 15px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9em;
+            margin-top: 20px;
+        }
+        
+        /* Style supplémentaire pour le formulaire */
+        .highlight-box form {
+            display: grid;
+            grid-template-columns: 1fr ;
+            gap: 15px;
+        }
+
+        .highlight-box .form-group:nth-last-child(2),
+        .highlight-box .form-group:nth-last-child(1) {
+            grid-column: span  1 ;
+        }
+
+        /* Style pour le champ date */
+        input[type="date"] {
+            position: relative;
+        }
+
+        input[type="date"]::-webkit-calendar-picker-indicator {
+            position: absolute;
+            right: 10px;
+            opacity: 1;
+        }
+
+        /* Style pour les champs obligatoires */
+        label[required]::after {
+            content: " *";
+            color: #e74c3c;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--teal-medium);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--gold-dark);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.2);
+        }
+        
+        /* Styles pour le texte arabe */
+        .arabic-text .form-group {
+            text-align: right;
+        }
+        
+        .arabic-text .contact-info {
+            direction: rtl;
+        }
+        
+        .arabic-text .highlight-list li {
+            padding-left: 0;
+            padding-right: 25px;
+        }
+        
+        .arabic-text .highlight-list li::before {
+            left: auto;
+            right: 0;
+        }
+        
+        .arabic-text .section-title::after {
+            left: auto;
+            right: 0;
+        }
+        
+        .arabic-text input, 
+        .arabic-text select, 
+        .arabic-text textarea {
+            text-align: right;
+            direction: rtl;
+        }
+        
+        .arabic-text .section-content,
+        .arabic-text .highlight-box,
+        .arabic-text .contact-info,
+        .arabic-text .contact-item,
+        .arabic-text .footer {
+            direction: rtl;
+            text-align: right;
+        }
+        
+        /* Conserver le titre en français */
+        .arabic-text .logo,
+        .arabic-text .logo-svg text {
+            direction: ltr;
+            text-align: center;
+        }
+        /* Style pour le message de confirmation */
+        #confirmation-message {
+            display: none;
+            background: rgba(26, 83, 92, 0.9);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            margin-top: 20px;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+        }
+        
+        #confirmation-message.show {
+            display: block;
+        }
+.old-price {
+    text-decoration: line-through;
+    color: #999;
+    margin-right: 10px;
+    font-size: 1rem;
+}
+
+.new-price {
+    color: #e63946;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+
+
+/* Media Queries pour différentes tailles */
+@media (min-width: 768px) {
+    .btn-group {
+        gap: 20px;
+        top: 20px;
+    }
+    
+    .btn {
+        padding: 15px 30px;
+        font-size: 1.1em;
+    }
+    
+    .header {
+        padding: 30px;
+    }
+    
+    .content {
+        padding: 40px 30px;
+    }
+    
+    .highlight-box form {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .highlight-box .form-group:nth-last-child(2),
+    .highlight-box .form-group:nth-last-child(1) {
+        grid-column: span 2;
+    }
+    
+    .contact-info {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (min-width: 992px) {
+    .content {
+        padding: 40px 50px;
+    }
+}
+
+
+/* Améliorations pour très petits écrans */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+    
+    .btn {
+        min-width: 160px;
+        padding: 10px 15px;
+        font-size: 0.9em;
+    }
+    
+    .logo {
+        font-size: 2.2em;
+    }
+    
+    .subtitle {
+        font-size: 1.1em;
+    }
+    
+    .section-title {
+        font-size: 1.3em;
+    }
+}
+
+    </style>
+</head>
+<body>
+        
+    <div class="btn-group">
+        <button class="btn download-btn" id="downloadBtn">
+            <i class="fas fa-download"></i> Télécharger en PDF
+        </button>
+        
+        <a href="#inscription-form" class="btn inscription-btn" onclick="scrollToForm()">
+            <i class="fas fa-pencil-alt"></i> S'inscrire à la formation
+        </a>
+        
+        <!-- Bouton de traduction ajouté ici -->
+        <button class="btn translation-btn" id="translationBtn">
+            <i class="fas fa-language"></i> العربية
+        </button>
+    </div>
+    
+    <div class="fiche-container" id="ficheContent">
+    
+        <div class="decorative-elements">
+            <div class="decorative-element"></div>
+            <div class="decorative-element"></div>
+        </div>
+   <div class="page-part"><!-- Page 1 -->
+        <div class="header">
+            <div class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Cadre décoratif -->
+                    <rect x="50" y="50" width="150" height="20" fill="#1a535c" />
+                    <rect x="600" y="50" width="150" height="20" fill="#d4af37" />
+                    <rect x="50" y="330" width="150" height="20" fill="#d4af37" />
+                    <rect x="600" y="330" width="150" height="20" fill="#1a535c" />
+                    
+                    <!-- Lignes décoratives -->
+                    <rect x="50" y="50" width="20" height="150" fill="#1a535c" />
+                    <rect x="730" y="50" width="20" height="150" fill="#d4af37" />
+                    <rect x="50" y="200" width="20" height="150" fill="#d4af37" />
+                    <rect x="730" y="200" width="20" height="150" fill="#1a535c" />
+                    
+                    <!-- Logo AM stylisé -->
+                    <text x="400" y="200" text-anchor="middle" font-family="serif" font-size="120" font-weight="bold" fill="#1a535c" style="font-style: italic;">
+                        AM
+                    </text>
+                    
+                    <!-- Texte principal -->
+                    <text x="400" y="260" text-anchor="middle" font-family="serif" font-size="32" font-weight="bold" fill="#1a535c" letter-spacing="2px">
+                        ARCHISTYLE BY MOURID
+                    </text>
+                    
+                    <!-- Slogan -->
+                    <text x="400" y="290" text-anchor="middle" font-family="sans-serif" font-size="18" fill="#1a535c">
+                        Architecture responsable , Avenir durable
+                    </text>
+                </svg>
+            </div>
+            <div class="header-text">
+                <div class="logo">Archistyle by Mourid</div>
+                <div class="subtitle">Formation Professionnelle</div>
+                <div class="tagline">Excellence Architecturale & Design Innovant</div>
+            </div>
+        </div>
+        
+        <div class="content">
+            <div class="section">
+                <h2 class="section-title">Introduction à l'Urbanisme et à l'Architecture</h2>
+                <div class="section-content">
+                    Le programme commence par une phase fondamentale axée sur l'urbanisme et l'architecture, avec un accent particulier sur les normes d'architecture. Cette partie inclut :
+                </div>
+                <div class="highlight-box">
+                    <ul class="highlight-list">
+                        <li><strong>Normes d'architecture :</strong> Maîtrise des réglementations et standards applicables dans les contextes marocains et internationaux.</li>
+                        <li><strong>Types de plans :</strong> Analyse approfondie des différents types de plans (cadastral, architectural, bureau d'études, etc.).</li>
+                        <li><strong>Lecture et dessin des plans :</strong> Apprentissage des techniques avancées de lecture et de création de plans en 2D.</li>
+                        <li><strong>Dessin en perspective :</strong> Développement des compétences en représentation perspective pour une visualisation réaliste des projets.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Décoration d'Intérieur</h2>
+                <div class="section-content">
+                    La formation se poursuit avec un module dédié à la décoration d'intérieur, couvrant les aspects fondamentaux et créatifs :
+                </div>
+                <div class="highlight-box">
+                    <ul class="highlight-list">
+                        <li><strong>Choix des couleurs et styles :</strong> Conception d'ambiances esthétiques et harmonieuses adaptées à différents types d'espaces.</li>
+                        <li><strong>Éclairage :</strong> Utilisation stratégique de la lumière naturelle et artificielle pour valoriser les espaces.</li>
+                        <li><strong>Modélisation et logiciels :</strong> Initiation complète aux logiciels ArchiCAD et 3DS Max pour la modélisation et le rendu photoréaliste.</li>
+                        <li><strong>Sélection des matériaux et mobiliers :</strong> Choix adaptés et durables pour l'aménagement intérieur.</li>
+                        <li><strong>Plan de revêtement :</strong> Élaboration de plans techniques pour les revêtements de sol et murs.</li>
+                    </ul>
+                </div>
+                
+            </div>
+        
+      <div class="page-part">
+        <div class="section">
+                <h2 class="section-title">Projet de Fin de Formation</h2>
+                <div class="section-content">
+                    Pour évaluer les acquis et permettre une mise en pratique concrète, un projet de fin de formation est proposé. Il permet de :
+                </div>
+                <div class="highlight-box">
+                    <ul class="highlight-list">
+                        <li>Mettre en pratique les connaissances théoriques et techniques acquises durant la formation.</li>
+                        <li>Réaliser un projet individuel ou collectif sous la supervision de nos experts.</li>
+                        <li>Évaluer le niveau des participants dans un cadre professionnel réaliste.</li>
+                        <li>Constituer un portfolio professionnel de qualité.</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2 class="section-title">Certification</h2>
+                <div class="section-content">
+                    À l'issue de la formation, une certification reconnue est remise aux participants ayant réussi les évaluations :
+                </div>
+                <div class="highlight-box">
+                    <ul class="highlight-list">
+                        <li>Validation des compétences techniques via le projet final et des évaluations continues.</li>
+                        <li>Reconnaissance officielle des aptitudes en architecture et design d'intérieur.</li>
+                        <li>Accès à notre réseau professionnel d'architectes et designers.</li>
+                    </ul>
+                </div>
+            </div>
+            
+        <div class="price-highlight">
+    <div class="info-label">Coût de la formation</div>
+    <span class="old-price">5000 DH</span>
+    <span class="new-price">3100 DH</span>
+</div>
+
+            
+            <div class="contact-section">
+                <div class="contact-title">Contact & Inscription</div>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div><i class="fas fa-map-marker-alt"></i> Adresse</div>
+                        <div>14 Rue Yatrib, Mers Sultan, Casablanca</div>
+                    </div>
+                    <div class="contact-item">
+                        <div><i class="fas fa-phone-alt"></i> Téléphone</div>
+                        <div>06 60 378 408<br>05 22 225 563</div>
+                    </div>
+                    <div class="contact-item">
+                        <div><i class="fas fa-envelope"></i> Email</div>
+                        <div>ayoub.mourid.archi@gmail.com</div>
+                    </div>
+                    <div class="contact-item">
+                        <div><i class="fas fa-calendar-check"></i> Durée</div>
+                        <div>2 mois + 1 mois projet final</div>
+                    </div>
+                </div>
+            </div>
+        
+      </div>            
+         <div class="section" id="inscription-form">
+  <h2 class="section-title">Formulaire d'Inscription</h2>
+  <div class="highlight-box">
+    <form id="inscriptionForm" action="https://formspree.io/f/mqabvzel" method="POST">
+      <!-- Informations personnelles -->
+      <div class="form-group">
+        <label for="name" required>Nom Complet</label>
+        <input type="text" id="name" name="name" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="birthdate" required>Date de Naissance</label>
+        <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="city" required>Ville</label>
+        <select id="city" name="city" class="form-control" required>
+          <option value="">-- Sélectionnez votre ville --</option>
+          <option value="Casablanca">Casablanca</option>
+          <option value="Rabat">Rabat</option>
+          <option value="Marrakech">Marrakech</option>
+          <option value="Fès">Fès</option>
+          <option value="Tanger">Tanger</option>
+          <option value="Meknès">Meknès</option>
+          <option value="Agadir">Agadir</option>
+          <option value="Oujda">Oujda</option>
+          <option value="Kénitra">Kénitra</option>
+          <option value="Tétouan">Tétouan</option>
+          <option value="Safi">Safi</option>
+          <option value="Mohammedia">Mohammedia</option>
+          <option value="El Jadida">El Jadida</option>
+          <option value="Béni Mellal">Béni Mellal</option>
+          <option value="Nador">Nador</option>
+          <option value="Taza">Taza</option>
+          <option value="Autre">Autre ville</option>
+        </select>
+      </div>
+
+      <!-- Coordonnées -->
+      <div class="form-group">
+        <label for="email" required>Email</label>
+        <input type="email" id="email" name="email" class="form-control" required>
+      </div>
+
+      <div class="form-group">
+        <label for="phone" required>Téléphone</label>
+        <input type="tel" id="phone" name="phone" class="form-control" required>
+      </div>
+
+      <!-- Situation professionnelle -->
+      <div class="form-group">
+        <label for="current_job" required>Profession Actuelle</label>
+        <input type="text" id="current_job" name="current_job" class="form-control" required>
+      </div>
+
+      <!-- Message optionnel -->
+      <div class="form-group">
+        <label for="message">Motivation (Optionnel)</label>
+        <textarea id="message" name="message" class="form-control" rows="4"></textarea>
+      </div>
+
+      <button type="submit" class="btn inscription-btn" style="width: 100%; margin-top: 15px;">
+        <i class="fas fa-paper-plane"></i> Envoyer la demande d'inscription
+      </button>
+    </form>
+  </div>
+</div>
+
+    </div>
+    
+    <div id="confirmation-message">
+        <h3>Merci pour votre inscription !</h3>
+        <p>Nous avons bien reçu votre demande d'inscription et vous contacterons très prochainement.</p>
+        <button class="btn inscription-btn" style="margin-top: 15px;" onclick="document.getElementById('confirmation-message').classList.remove('show')">
+            Fermer
+        </button>
+    </div>
+    
+    <div class="footer">
+        © 2025 Archistyle by Mourid - Tous droits réservés
+    </div>
+
+    <script>
+        // Traductions arabe complètes et corrigées
+        const translations = {
+            // Textes de la page
+            "Formation Professionnelle": "التكوين المهني",
+            "Excellence Architecturale & Design Innovant": "التميز المعماري والتصميم المبتكر",
+            "Introduction à l'Urbanisme et à l'Architecture": "مقدمة في التخطيط الحضري والهندسة المعمارية",
+            "Le programme commence par une phase fondamentale axée sur l'urbanisme et l'architecture, avec un accent particulier sur les normes d'architecture. Cette partie inclut :": 
+                "يبدأ البرنامج بمرحلة أساسية تركز على التخطيط الحضري والهندسة المعمارية، مع تركيز خاص على معايير الهندسة المعمارية. يتضمن هذا الجزء:",
+            "<strong>Normes d'architecture :</strong> Maîtrise des réglementations et standards applicables dans les contextes marocains et internationaux.": 
+                "<strong>معايير الهندسة المعمارية:</strong> إتقان اللوائح والمعايير المعمول بها في السياقات المغربية والدولية.",
+            "<strong>Types de plans :</strong> Analyse approfondie des différents types de plans (cadastral, architectural, bureau d'études, etc.).": 
+                "<strong>أنواع المخططات:</strong> تحليل متعمق لأنواع مختلفة من المخططات (المساحية، المعمارية، مكاتب الدراسات، إلخ).",
+            "<strong>Lecture et dessin des plans :</strong> Apprentissage des techniques avancées de lecture et de création de plans en 2D.": 
+                "<strong>قراءة ورسم المخططات:</strong> تعلم تقنيات متقدمة لقراءة وإنشاء المخططات ثنائية الأبعاد.",
+            "<strong>Dessin en perspective :</strong> Développement des compétences en représentation perspective pour une visualisation réaliste des projets.": 
+                "<strong>الرسم المنظوري:</strong> تطوير المهارات في التمثيل المنظوري لتصور واقعي للمشاريع.",
+            "Décoration d'Intérieur": "الديكور الداخلي",
+            "La formation se poursuit avec un module dédié à la décoration d'intérieur, couvrant les aspects fondamentaux et créatifs :": 
+                "يستمر التكوين مع وحدة مخصصة للديكور الداخلي، تغطي الجوانب الأساسية والإبداعية:",
+            "<strong>Choix des couleurs et styles :</strong> Conception d'ambiances esthétiques et harmonieuses adaptées à différents types d'espaces.": 
+                "<strong>اختيار الألوان والأنماط:</strong> تصميم أجواء جمالية ومتناغمة تناسب أنواع مختلفة من المساحات.",
+            "<strong>Éclairage :</strong> Utilisation stratégique de la lumière naturelle et artificielle pour valoriser les espaces.": 
+                "<strong>الإضاءة:</strong> استخدام استراتيجي للضوء الطبيعي والاصطناعي لتعزيز المساحات.",
+            "<strong>Modélisation et logiciels :</strong> Initiation complète aux logiciels ArchiCAD et 3DS Max pour la modélisation et le rendu photoréaliste.": 
+                "<strong>النمذجة والبرمجيات:</strong> مقدمة كاملة لبرامج ArchiCAD و3DS Max للنمذجة والعرض الواقعي.",
+            "<strong>Sélection des matériaux et mobiliers :</strong> Choix adaptés et durables pour l'aménagement intérieur.": 
+                "<strong>اختيار المواد والأثاث:</strong> خيارات مناسبة ومستدامة للتصميم الداخلي.",
+            "<strong>Plan de revêtement :</strong> Élaboration de plans techniques pour les revêtements de sol et murs.": 
+                "<strong>مخطط التغطية:</strong> إعداد مخططات تقنية لتغطيات الأرضيات والجدران.",
+            "Projet de Fin de Formation": "مشروع نهاية التكوين",
+            "Pour évaluer les acquis et permettre une mise en pratique concrète, un projet de fin de formation est proposé. Il permet de :": 
+                "لتقييم المكتسبات والسماح بتطبيق عملي، يتم اقتراح مشروع نهاية التكوين. يسمح بما يلي:",
+            "Mettre en pratique les connaissances théoriques et techniques acquises durant la formation.": 
+                "تطبيق المعارف النظرية والتقنية المكتسبة خلال التكوين.",
+            "Réaliser un projet individuel ou collectif sous la supervision de nos experts.": 
+                "تنفيذ مشروع فردي أو جماعي تحت إشراف خبرائنا.",
+            "Évaluer le niveau des participants dans un cadre professionnel réaliste.": 
+                "تقييم مستوى المشاركين في إطار احترافي واقعي.",
+            "Constituer un portfolio professionnel de qualité.": 
+                "إنشاء محفظة مهنية عالية الجودة.",
+            "Certification": "الشهادة",
+            "À l'issue de la formation, une certification reconnue est remise aux participants ayant réussi les évaluations :": 
+                "في نهاية التكوين، يتم تسليم شهادة معترف بها للمشاركين الذين اجتازوا التقييمات:",
+            "Validation des compétences techniques via le projet final et des évaluations continues.": 
+                "اعتماد المهارات التقنية من خلال المشروع النهائي والتقييمات المستمرة.",
+            "Reconnaissance officielle des aptitudes en architecture et design d'intérieur.": 
+                "اعتراف رسمي بالمهارات في الهندسة المعمارية والتصميم الداخلي.",
+            "Accès à notre réseau professionnel d'architectes et designers.": 
+                "الوصول إلى شبكتنا المهنية من المهندسين المعماريين والمصممين.",
+            "Coût de la formation": "تكلفة التكوين",
+            "Contact & Inscription": "الاتصال والتسجيل",
+            "Adresse": "العنوان",
+            "Téléphone": "الهاتف",
+            "Email": "البريد الإلكتروني",
+            "Durée": "المدة",
+            "Formulaire d'Inscription": "استمارة التسجيل",
+            "Nom Complet": "الاسم الكامل",
+            "Date de Naissance": "تاريخ الميلاد",
+            "Ville": "المدينة",
+            "-- Sélectionnez votre ville --": "-- اختر مدينتك --",
+            "Profession Actuelle": "المهنة الحالية",
+            "Motivation (Optionnel)": "التحفيز (اختياري)",
+            "Envoyer la demande d'inscription": "إرسال طلب التسجيل",
+            "Télécharger en PDF": "تحميل PDF",
+            "S'inscrire à la formation": "التسجيل في التكوين",
+            "Merci pour votre inscription !": "شكرًا لتسجيلك!",
+            "Nous avons bien reçu votre demande d'inscription et vous contacterons très prochainement.": 
+                "لقد استلمنا طلب التسجيل الخاص بك وسنتواصل معك قريبًا.",
+            "Fermer": "إغلاق",
+            "© 2025 Archistyle by Mourid - Tous droits réservés": "© 2025 أرشيستايل لموريد - جميع الحقوق محفوظة",
+            "14 Rue Yatrib, Mers Sultan, Casablanca": "14 شارع يثرب، مرس السلطان، الدار البيضاء",
+            "06 60 378 408\n05 22 225 563": "06 60 378 408\n05 22 225 563",
+            "ayoub.mourid.archi@gmail.com": "ayoub.mourid.archi@gmail.com",
+            "2 mois + 1 mois projet final": "شهران + شهر واحد للمشروع النهائي",
+            "Casablanca": "الدار البيضاء",
+            "Rabat": "الرباط",
+            "Marrakech": "مراكش",
+            "Fès": "فاس",
+            "Tanger": "طنجة",
+            "Meknès": "مكناس",
+            "Agadir": "أكادير",
+            "Oujda": "وجدة",
+            "Kénitra": "القنيطرة",
+            "Tétouan": "تطوان",
+            "Safi": "آسفي",
+            "Mohammedia": "المحمدية",
+            "El Jadida": "الجديدة",
+            "Béni Mellal": "بني ملال",
+            "Nador": "الناظور",
+            "Taza": "تازة",
+            "Autre": "مدينة أخرى",
+            "العربية": "Français"
+        };
+
+        // État de traduction
+        let isArabic = false;
+        const originalContents = new Map();
+
+        // Fonction pour sauvegarder le contenu original
+        function saveOriginalContent(element) {
+            if (!originalContents.has(element)) {
+                originalContents.set(element, element.innerHTML);
+            }
+        }
+
+        // Fonction pour traduire la page en arabe
+        function translatePageToArabic() {
+            if (isArabic) return;
+            isArabic = true;
+            
+            document.body.classList.add('arabic-text');
+            
+            // Sélectionner tous les éléments à traduire
+            const elements = document.querySelectorAll('.subtitle, .tagline, .section-title, .section-content, .highlight-list li, .info-label, .new-price, .contact-title, .contact-item div, #inscription-form label, #inscription-form button, .footer, #downloadBtn, .inscription-btn, #translationBtn, option');
+            
+            elements.forEach(el => {
+                saveOriginalContent(el);
+                
+                if (el.tagName === 'OPTION') {
+                    // Traduction spéciale pour les options
+                    const key = el.textContent.trim();
+                    if (translations[key]) {
+                        el.textContent = translations[key];
+                    }
+                } else {
+                    // Traduire le contenu HTML
+                    const key = originalContents.get(el);
+                    if (translations[key]) {
+                        el.innerHTML = translations[key];
+                    } else {
+                        // Traduire le texte brut si aucune correspondance HTML
+                        const textKey = el.textContent.trim();
+                        if (translations[textKey]) {
+                            el.textContent = translations[textKey];
+                        }
+                    }
+                }
+            });
+            
+            // Mettre à jour le bouton de traduction
+            const translationBtn = document.getElementById('translationBtn');
+            translationBtn.innerHTML = '<i class="fas fa-language"></i> Français';
+        }
+
+        // Fonction pour traduire la page en français
+        function translatePageToFrench() {
+            if (!isArabic) return;
+            isArabic = false;
+            
+            document.body.classList.remove('arabic-text');
+            
+            // Restaurer le contenu original
+            originalContents.forEach((content, element) => {
+                element.innerHTML = content;
+            });
+            
+            // Mettre à jour le bouton de traduction
+            const translationBtn = document.getElementById('translationBtn');
+            translationBtn.innerHTML = '<i class="fas fa-language"></i> العربية';
+        }
+
+        // Basculer entre les langues
+        function toggleTranslation() {
+            if (isArabic) {
+                translatePageToFrench();
+            } else {
+                translatePageToArabic();
+            }
+        }
+
+        // Initialiser le bouton de traduction
+        document.getElementById('translationBtn').addEventListener('click', toggleTranslation);
+        
+        async function generatePDF() {
+            const pdf = new jspdf.jsPDF('p', 'mm', 'a4');
+            const parts = document.querySelectorAll('#ficheContent .page-part');
+            
+            for (let i = 0; i < parts.length; i++) {
+                const clone = parts[i].cloneNode(true);
+                const wrapper = document.createElement('div');
+                wrapper.style.position = 'absolute';
+                wrapper.style.left = '-9999px';
+                wrapper.style.width = '800px';
+                wrapper.appendChild(clone);
+                document.body.appendChild(wrapper);
+                
+                const canvas = await html2canvas(clone, { scale: 2 });
+                const imgData = canvas.toDataURL('image/png');
+                
+                // Dimensions de la page A4
+                const pageWidth = 210; // mm
+                const pageHeight = 297; // mm
+                
+                // Dimensions de l'image à 80% de la largeur
+                const imgWidth = pageWidth * 0.9; // 80% de la largeur de la page
+                const imgHeight = (canvas.height * imgWidth) / canvas.width;
+                
+                // Position pour centrer horizontalement
+                const x = (pageWidth - imgWidth) / 2;
+                
+                if (i > 0) pdf.addPage();
+                pdf.addImage(imgData, 'PNG', x, 10, imgWidth, imgHeight);
+                document.body.removeChild(wrapper);
+            }
+            
+            pdf.save("fiche-formation.pdf");
+        }
+        
+        document.getElementById('downloadBtn').addEventListener('click', generatePDF);
+
+        // Gestion du formulaire d'inscription
+        document.getElementById('inscriptionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = e.target;
+            const data = new FormData(form);
+
+            fetch(form.action, {
+                method: form.method,
+                body: data,
+                headers: {
+                  'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    // Afficher confirmation
+                    document.getElementById('confirmation-message').classList.add('show');
+                    form.reset();
+                } else {
+                    alert("Une erreur est survenue lors de l'envoi.");
+                }
+            }).catch(error => {
+                alert("Erreur réseau ou serveur.");
+            });
+        });
+
+        // Fonction pour faire défiler jusqu'au formulaire
+        function scrollToForm() {
+            document.getElementById('inscription-form').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+    </script>
+</body>
+</html>
